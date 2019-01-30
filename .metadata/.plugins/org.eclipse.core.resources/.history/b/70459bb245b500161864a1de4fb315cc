@@ -1,0 +1,242 @@
+package com.example.babyspa;
+
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemLongClickListener;
+
+public class knowmore extends Activity {
+	private String TAG = postlist.class.getSimpleName(); 
+	 
+ 	private ProgressDialog pDialog;  	
+ 	private ListView lv;  	private TextView tvEmpty; 
+ 	//private Button btnNew; 
+ 	//private String [] arrayItem = {staticbaby.UPDATE, staticbaby.DELETE}; 
+ 	 
+ 	ArrayList<post> knowmore = new ArrayList<post>(); 
+ 	 
+ 	@Override 
+ 	protected void onCreate(Bundle savedInstanceState) {  	 	
+ 		super.onCreate(savedInstanceState); 
+ 	 	setContentView(R.layout.knowmore); 
+ 	 	 
+ 	 	lv = (ListView) findViewById(R.id.listView1);  	 	
+ 	 	tvEmpty = (TextView) findViewById(R.id.tvEmpty); 
+ 	 	//btnNew = (Button) findViewById(R.id.addpost); 
+ 	 	 
+ 	 	// Add new post  
+ 	 	//btnNew.setOnClickListener(new OnClickListener() { 
+ 	 	 	 
+ 	 	 	 
+ 	 	 	//public void onClick(View v) { 
+ 	 	 	 	//Intent iNew = new Intent(postlist.this, addpost.class); 
+ 	 	 	 	//finish(); 
+ 	 	 	 	//startActivity(iNew); 
+ 	 	 	//} 
+ 	 	//}); 
+ 	 	 
+ 	 	// Load posts  	 	
+ 	 	new Getposts().execute(); 
+ 	 	 
+ 	 	// Show dialog for Update/Delete post 
+ 	 	 	lv.setOnItemLongClickListener(new OnItemLongClickListener() { 
+ 
+ 	 	 	
+ 	 	 	public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+ 	AlertDialog.Builder dialogItem = new 
+ 			AlertDialog.Builder(knowmore.this); 
+ 	 	 	 	 	final post post = knowmore.get(position); 
+ 	 	 	 	 	dialogItem.setTitle(post.getjudul()); 
+ 	 	 	 	 	 
+ 	 	 	 	 	final ArrayAdapter<String> Adapterbaby = new 
+ArrayAdapter<String>(knowmore.this, android.R.layout.simple_list_item_1, arrayItem); 
+     dialogItem.setAdapter(Adapterbaby, new DialogInterface.OnClickListener() 
+{ 
+ 	 	 	 	 	 	 
+ 	 	 	 	 	 	@Override 
+      public void onClick(DialogInterface dialog, int positionDialog) { 
+// 	 	 	 	 	 	 	  	 	 	 	 	 	 	if 
+//(Adapterbaby.getItem(positionDialog).equals(staticbaby.UPDATE)) {
+// Intent iEdit = new Intent(knowmore.this, editpost.class); 
+// iEdit.putExtra(staticbaby.postid, post.getpostid()); 
+// iEdit.putExtra(staticbaby.judul, post.getjudul()); 
+// iEdit.putExtra(staticbaby.isi, post.getisi()); 
+// knowmore.this.finish(); 
+// startActivity(iEdit); 
+
+
+
+ 	 	 	 	 	 	 	  	 	 	 	 	 	 	
+ //	 	 	 	 	 	 	} else { 
+// 	 	 	 	 	 	 	 	new Deletepost().execute(post); 
+// 	 	 	 	 	 	 	} 
+// 	 	 	 	 	 	 	 
+// 	 	 	 	 	 	} 	 	 	 	 
+// 	 	 	 	 	}).show();  	 	 	 	 	return false; 
+// 	 	 	 	} 
+// 	 	 	}); 
+ 	 	 
+ 	 	 
+ 	} 
+ 
+ 	/** 
+ * Async task class to get json by making HTTP call 
+ */ 
+private class Getposts extends AsyncTask<Void, Void, Void> { 
+@Override 
+protected void onPreExecute() {  	
+	super.onPreExecute(); 
+ 	// Showing progress dialog  	 	
+pDialog = new ProgressDialog(postlist.this);  	
+pDialog.setMessage("Please wait..."); 
+ 	 	 	pDialog.setCancelable(false);  	 	 	
+ 	 	 	pDialog.show(); 
+ 
+ 	 	} 
+ 
+ 	 	@Override 
+ 	 	protected Void doInBackground(Void... params) { 
+ 	 	 	HttpHandlerbaby sh = new HttpHandlerbaby(); 
+ 
+ 	 	 	// Making a request to url and getting response 
+ 	 	 	String jsonStr = sh.callJson(); 
+ 
+ 	 	 	if (jsonStr != null) { 
+ 	 	 	 	try { 
+ 	 	 	 	 	JSONObject jsonObj = new JSONObject(jsonStr); 
+ 
+ 	 	 	 	 	// Getting JSON Array node 
+     JSONArray posts = jsonObj.getJSONArray(staticbaby.post); 
+ 	 	 	 	 	if (!posts.getJSONObject(0).equals(staticbaby.EMPTY)) { 
+ 	 	 	 	 	 	// looping through All posts 
+ 	 	 	 	 	 	for (int i = 0; i < posts.length(); i++) {  	 	 	 	 	 	 	
+ 	 	 	 	 	 		JSONObject c = posts.getJSONObject(i); 
+ 	 	 	 	 	 	 	post post = new post(); 
+ 
+ 	 	 	 	 	 	 	post.setpostid(c.getString(staticbaby.postid));  	 	 	 	 	 	 	
+ 	 	 	 	 	 	 	post.setjudul(c.getString(staticbaby.judul));  	 	 	 	 	 	 	
+ 	 	 	 	 	 	 	post.setisi(c.getString(staticbaby.isi)); 
+ 
+ 	 	 	 	 	 	 	 
+ 	 	 	 	 	 	 	// adding post to post list 
+ 	 	 	 	 	 	 	listpost.add(post); 
+ 	 	 	 	 	 	} 
+ 	 	 	 	 	}  
+ 	 	 	 	} catch (final JSONException e) { 
+ 	 	 	 	Log.e(TAG, "Json parsing error: " + e.getMessage()); 
+ 	 	 	} 
+ 	 	} else { 
+ 	 	 	Log.e(TAG, "Couldn't get json from server."); 
+runOnUiThread(new Runnable() { 
+ 	 	 	@Override 
+ 	 	 	public void run() { 
+ 	 	 	 	Toast.makeText(  	 	 	 	 	 	 	
+ 	 	 	 			getApplicationContext(), "Couldn't get json from server. Check LogCat for possible errors!", 
+ 	 	 	 	 	 	 	 	Toast.LENGTH_LONG).show(); 
+ 	 	 	 	 	} 
+ 	 	 	 	}); 
+ 
+ 	 	 	} 
+ 
+ 	 	 	return null; 
+ 	 	} 
+ 
+ 	 	@Override 
+ 	 	protected void onPostExecute(Void result) {  	 	 	
+ 	 		super.onPostExecute(result);  	 	 	// Dismiss the progress dialog  	 	 	
+ 	 		if (pDialog.isShowing()) 
+ 	 	 	 	pDialog.dismiss(); 
+ 	 	 	/** 
+*	Updating parsed JSON data into ListView 
+*	*/ 
+ 	 	 	if (listpost.size() > 0) { 
+ 	 	 	 	Adapterbaby Adapterbaby = new Adapterbaby(getApplicationContext(), listpost); 
+ 	 	 	 	lv.setAdapter(Adapterbaby); 
+ 	 	 	} else { 
+ 	 	 	 	tvEmpty.setText("Table is Empty"); 
+ 	 	 	} 
+ 	 	} 
+ 
+ 	} 
+ 	 
+ 	/** 
+*	Async task class to send json  
+ 	 */ 
+ 	private class Deletepost extends AsyncTask<post, Void, String> { 
+ 
+ 	@Override 
+ 	protected void onPreExecute() {  	 	super.onPreExecute();  	 	// Showing progress dialog 
+ 	pDialog = new ProgressDialog(postlist.this); 
+ 	pDialog.setMessage("Deleting a data...");  	pDialog.setCancelable(false);  
+ 	pDialog.show(); 
+} 
+ 	 	 
+ 	 	@Override 
+ 	 	protected String doInBackground(post... posts) { 
+ 	 	 	 
+ 	 	 	post post = posts[0]; 
+ 	 	 	String result = "";  	 	 	 
+ 	 	 	try { 
+ 	 	 	 	HttpHandlerbaby sj = new HttpHandlerbaby(); 
+    JSONObject resObj = new JSONObject(sj.sendJson(HttpHandlerbaby. MYURL + 
+HttpHandlerbaby.DELETE, post)); 
+ 	 	 	 	JSONArray resArr = resObj.getJSONArray(staticbaby.POSTS); 
+ 	 	 	 	result = resArr.getString(0); 
+ 	 	 	} catch (JSONException e) { 
+ 	 	 	 	Log.i(TAG, "JSON parse error " + e.getMessage()); 
+ 	 	 	} 
+ 	 	 	 
+ 	 	 	return result; 
+ 	 	} 
+ 	 	 
+ 	 	@Override 
+ 	 	protected void onPostExecute(String result) {  	 	 	
+ 	 		super.onPostExecute(result);  	 	 	// Dismiss the progress dialog  	 	 	
+ 	 	if (pDialog.isShowing()) 
+ 	 	 	 	pDialog.dismiss(); 
+ 	 	 	 
+ 	 	 	Log.d(TAG, result); 
+ 	 	 	/** 
+*	Show insert information 
+*	*/ 
+ 	 	 	if (result.equals(staticbaby.SUCCESS)) { 
+ 	 	 	 	Toast.makeText(postlist.this, "Post deleted", 
+Toast.LENGTH_LONG).show(); 
+ 	 	 	listpost.clear(); 
+ 	 	 	new Getposts().execute(); 
+ 	 	} else if (result.equals(staticbaby.FAIL)) { 
+Toast.makeText(postlist.this, "Fail to delete post", 
+Toast.LENGTH_LONG).show(); 
+ 	 	 	} 
+ 	 	 	 
+ 	 	} 
+ 	 
+ 	} 
+ 
+ 	@Override 
+ 	public boolean onCreateOptionsMenu(Menu menu) { 
+ 	 	getMenuInflater().inflate(R.menu.baby_s, menu); 
+ 	 	return true;  	
+ 	 	} 
+ 
+
+
+ 	 	 	

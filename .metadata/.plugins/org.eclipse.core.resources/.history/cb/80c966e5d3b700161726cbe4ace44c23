@@ -1,0 +1,122 @@
+package com.example.babyspa;
+
+import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class knowmore extends Activity {
+		private String TAG = knowmore.class.getSimpleName(); 
+		 
+		  private ProgressDialog pDialog; 
+		  private ListView lv; 
+		  private TextView tvEmpty; 
+		  private String [] arrayItem = {staticbaby.UPDATE, staticbaby.DELETE}; 
+		   
+		  ArrayList<post> listpost = new ArrayList<post>(); 
+		   
+		  @Override 
+		  protected void onCreate(Bundle savedInstanceState) { 
+		    super.onCreate(savedInstanceState); 
+		    setContentView(R.layout.knowmore); //activity main gessy namanya list post
+		     
+		    lv = (ListView) findViewById(R.id.listView1);  
+		    tvEmpty = (TextView) findViewById(R.id.tvEmpty); 
+		    
+		     
+		    // Add new post 
+		     
+		    // Load post 
+		    new Getpost().execute();
+		
+}
+		  private class Getpost extends AsyncTask<Void, Void, Void> { 
+
+			    @Override 
+			    protected void onPreExecute() { 
+			      super.onPreExecute(); 
+			      // Showing progress dialog 
+			      pDialog = new ProgressDialog(knowmore.this); 
+			      pDialog.setMessage("Please wait..."); 
+			      pDialog.setCancelable(false); 
+			      pDialog.show(); 
+			 
+			    } 
+			 
+			    @Override 
+			    protected Void doInBackground(Void... params) { 
+			      HttpHandlerbaby sh = new HttpHandlerbaby(); 
+			 
+			      // Making a request to url and getting response 
+			      String jsonStr = sh.callJson(); 
+			 
+			      if (jsonStr != null) { 
+			        try { 
+			          JSONObject jsonObj = new JSONObject(jsonStr); 
+			 
+			          // Getting JSON Array node 
+			          JSONArray post = jsonObj.getJSONArray(staticbaby.post); 
+			          if (!post.getJSONObject(0).equals(staticbaby.EMPTY)) { 
+			            // looping through All post sts
+			            for (int i = 0; i < post.length(); i++) { 
+			              JSONObject c = post.getJSONObject(i); 
+			              post posts = new post(); 
+			 
+			              //post.setId(c.getString(Static_post.id)); //kalau gamau ditampilin di daftar,di komen aja
+			              posts.setjudul(c.getString(staticbaby.judul)); 
+			              posts.setisi(c.getString(staticbaby.isi)); 
+			               
+			              // adding post to post list 
+			              listpost.add(posts); 
+			            } 
+			          }  
+			        } catch (final JSONException e) { 
+			          Log.e(TAG, "Json parsing error: " + e.getMessage()); 
+			        } 
+			      } else { 
+
+			        Log.e(TAG, "Couldn't get json from server."); 
+			        runOnUiThread(new Runnable() { 
+			          @Override 
+			          public void run() { 
+			            Toast.makeText( 
+			                getApplicationContext(), "Couldn't get json from server. Check LogCat for possible errors!", Toast.LENGTH_LONG).show(); 
+			          } 
+			        }); 
+			 
+			      } 
+			 
+			      return null; 
+			    } 
+			 
+			    @Override 
+			    protected void onPostExecute(Void result) { 
+			      super.onPostExecute(result); 
+			      // Dismiss the progress dialog 
+			      if (pDialog.isShowing()) 
+			        pDialog.dismiss(); 
+			      /** 
+			       * Updating parsed JSON data into ListView 
+			       * */ 
+			      if (listpost.size() > 0) { 
+			        Adapterbaby adapter = new Adapterbaby(getApplicationContext(), listpost); 
+			        lv.setAdapter(adapter); 
+			      } else { 
+			        tvEmpty.setText("Table is Empty"); 
+			      } 
+			    } 
+			 
+			  } 
+}

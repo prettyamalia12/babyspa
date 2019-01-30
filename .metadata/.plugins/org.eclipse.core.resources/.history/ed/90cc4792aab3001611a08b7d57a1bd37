@@ -1,0 +1,212 @@
+package com.example.babyspa;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+
+public class postlist extends Activity{
+
+	private String TAG = postlist.class.getSimpleName(); 
+	 
+ 	private ProgressDialog pDialog;  	
+ 	private ListView lv;  	
+ 	private TextView tvEmpty; 
+ 	private Button btnNew; 
+ 	private String [] arrayItem = {Static.UPDATE, Static.DELETE}; 
+ 	 
+ 	ArrayList<Contact> listContact = new ArrayList<Contact>(); 
+ 	 
+ 	@Override 
+ 	protected void onCreate(Bundle savedInstanceState) {  	 	
+ 		super.onCreate(savedInstanceState); 
+ 	 	setContentView(R.layout.postlist); 
+ 	 	 
+ 	 	lv = (ListView) findViewById(R.id.list);  	 	
+ 	 	tvEmpty = (TextView) findViewById(R.id.tvEmpty); 
+ 	 	btnNew = (Button) findViewById(R.id.btnNew); 
+ 	 	 
+ 	 	// Add new contact  
+ 	 	btnNew.setOnClickListener(new OnClickListener() { 
+ 	 	 	 
+ 	 	 	@Override 
+ 	 	 	public void onClick(View v) { 
+ 	 	 	 	Intent iNew = new Intent(MainActivity.this, AddActivity.class); 
+ 	 	 	 	finish(); 
+ 	 	 	 	startActivity(iNew); 
+ 	 	 	} 
+ 	 	}); 
+ 	 	 
+ 	 	// Load contacts  	 	new GetContacts().execute(); 
+ 	 	 
+ 	 	// Show dialog for Update/Delete contact 
+ 	 	 	lv.setOnItemLongClickListener(new OnItemLongClickListener() { 
+ 
+ 	 	 	@Override 
+ 	 	 	public boolean onItemLongClick(AdapterView<?> parent, View v, int position, long id) {
+ 	AlertDialog.Builder dialogItem = new 
+AlertDialog.Builder(MainActivity.this); 
+ 	 	 	 	 	final Contact contact = listContact.get(position); 
+ 	 	 	 	 	dialogItem.setTitle(contact.getName()); 
+ 	 	 	 	 	 
+ 	 	 	 	 	final ArrayAdapter<String> adapter = new 
+ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1, arrayItem); 
+     dialogItem.setAdapter(adapter, new DialogInterface.OnClickListener() 
+{ 
+ 	 	 	 	 	 	 
+ 	 	 	 	 	 	@Override 
+      public void onClick(DialogInterface dialog, int positionDialog) { 
+ 	 	 	 	 	 	 	  	 	 	 	 	 	 	if 
+(adapter.getItem(positionDialog).equals(Static.UPDATE)) { 
+ 	 	 
+EditActivity.class); 	 	 	 	 	 	Intent iEdit = new Intent(MainActivity.this, 
+ 	 	 	 	 	 	 	 	iEdit.putExtra(Static.ID, contact.getId()); 
+ 	 	 
+contact.getName()); 	 	 	 	 	 	iEdit.putExtra(Static.NAME, 
+ 	 	 
+contact.getEmail()); 	 	 	 	 	 	iEdit.putExtra(Static.EMAIL, 
+ 	 	 
+contact.getMobile()); 	 	 	 	 	 	iEdit.putExtra(Static.MOBILE, 
+ 	 	 	 	 	 	 	 	MainActivity.this.finish(); 
+ 	 	 	 	 	 	 	 	startActivity(iEdit); 
+ 	 	 	 	 	 	 	} else { 
+ 	 	 	 	 	 	 	 	new DeleteContact().execute(contact); 
+ 	 	 	 	 	 	 	} 
+ 	 	 	 	 	 	 	 
+ 	 	 	 	 	 	} 	 	 	 	 
+ 	 	 	 	 	}).show();  	 	 	 	 	return false; 
+ 	 	 	 	} 
+ 	 	 	}); 
+ 	 	 
+ 	 	 
+ 	} 
+ 
+ 	/** 
+ * Async task class to get json by making HTTP call 
+ */ 
+private class GetContacts extends AsyncTask<Void, Void, Void> { 
+@Override 
+protected void onPreExecute() {  	super.onPreExecute(); 
+ 	// Showing progress dialog  	 	pDialog = new ProgressDialog(MainActivity.this);  	pDialog.setMessage("Please wait..."); 
+ 	 	 	pDialog.setCancelable(false);  	 	 	pDialog.show(); 
+ 
+ 	 	} 
+ 
+ 	 	@Override 
+ 	 	protected Void doInBackground(Void... params) { 
+ 	 	 	HttpHandler sh = new HttpHandler(); 
+ 
+ 	 	 	// Making a request to url and getting response 
+ 	 	 	String jsonStr = sh.callJson(); 
+ 
+ 	 	 	if (jsonStr != null) { 
+ 	 	 	 	try { 
+ 	 	 	 	 	JSONObject jsonObj = new JSONObject(jsonStr); 
+ 
+ 	 	 	 	 	// Getting JSON Array node 
+     JSONArray contacts = jsonObj.getJSONArray(Static.CONTACT); 
+ 	 	 	 	 	if (!contacts.getJSONObject(0).equals(Static.EMPTY)) { 
+ 	 	 	 	 	 	// looping through All Contacts 
+ 	 	 	 	 	 	for (int i = 0; i < contacts.length(); i++) {  	 	 	 	 	 	 	JSONObject c = contacts.getJSONObject(i); 
+ 	 	 	 	 	 	 	Contact contact = new Contact(); 
+ 
+ 	 	 	 	 	 	 	contact.setId(c.getString(Static.ID));  	 	 	 	 	 	 	contact.setName(c.getString(Static.NAME));  	 	 	 	 	 	 	contact.setEmail(c.getString(Static.EMAIL)); 
+       contact.setMobile(c.getString(Static.MOBILE)); 
+ 	 	 	 	 	 	 	 
+ 	 	 	 	 	 	 	// adding contact to contact list 
+ 	 	 	 	 	 	 	listContact.add(contact); 
+ 	 	 	 	 	 	} 
+ 	 	 	 	 	}  
+ 	 	 	 	} catch (final JSONException e) { 
+ 	 	 	 	Log.e(TAG, "Json parsing error: " + e.getMessage()); 
+ 	 	 	} 
+ 	 	} else { 
+ 	 	 	Log.e(TAG, "Couldn't get json from server."); 
+runOnUiThread(new Runnable() { 
+ 	 	 	@Override 
+ 	 	 	public void run() { 
+ 	 	 	 	Toast.makeText(  	 	 	 	 	 	 	getApplicationContext(), 
+ 	 	 	 	 	 	"Couldn't get json from server. Check LogCat 
+for possible errors!", 
+ 	 	 	 	 	 	 	 	Toast.LENGTH_LONG).show(); 
+ 	 	 	 	 	} 
+ 	 	 	 	}); 
+ 
+ 	 	 	} 
+ 
+ 	 	 	return null; 
+ 	 	} 
+ 
+ 	 	@Override 
+ 	 	protected void onPostExecute(Void result) {  	 	 	super.onPostExecute(result);  	 	 	// Dismiss the progress dialog  	 	 	if (pDialog.isShowing()) 
+ 	 	 	 	pDialog.dismiss(); 
+ 	 	 	/** 
+*	Updating parsed JSON data into ListView 
+*	*/ 
+ 	 	 	if (listContact.size() > 0) { 
+ 	 	 	 	Adapter adapter = new Adapter(getApplicationContext(), listContact); 
+ 	 	 	 	lv.setAdapter(adapter); 
+ 	 	 	} else { 
+ 	 	 	 	tvEmpty.setText("Table is Empty"); 
+ 	 	 	} 
+ 	 	} 
+ 
+ 	} 
+ 	 
+ 	/** 
+*	Async task class to send json  
+ 	 */ 
+ 	private class DeleteContact extends AsyncTask<Contact, Void, String> { 
+ 
+ 	@Override 
+ 	protected void onPreExecute() {  	 	super.onPreExecute();  	 	// Showing progress dialog pDialog = new ProgressDialog(MainActivity.this); 
+ 	pDialog.setMessage("Deleting a data...");  	pDialog.setCancelable(false);  	pDialog.show(); 
+} 
+ 	 	 
+ 	 	@Override 
+ 	 	protected String doInBackground(Contact... contacts) { 
+ 	 	 	 
+ 	 	 	Contact contact = contacts[0]; 
+ 	 	 	String result = "";  	 	 	 
+ 	 	 	try { 
+ 	 	 	 	HttpHandler sj = new HttpHandler(); 
+    JSONObject resObj = new JSONObject(sj.sendJson(HttpHandler. MYURL + 
+HttpHandler.DELETE, contact)); 
+ 	 	 	 	JSONArray resArr = resObj.getJSONArray(Static.POSTS); 
+ 	 	 	 	result = resArr.getString(0); 
+ 	 	 	} catch (JSONException e) { 
+ 	 	 	 	Log.i(TAG, "JSON parse error " + e.getMessage()); 
+ 	 	 	} 
+ 	 	 	 
+ 	 	 	return result; 
+ 	 	} 
+ 	 	 
+ 	 	@Override 
+ 	 	protected void onPostExecute(String result) {  	 	 	super.onPostExecute(result);  	 	 	// Dismiss the progress dialog  	 	 	if (pDialog.isShowing()) 
+ 	 	 	 	pDialog.dismiss(); 
+ 	 	 	 
+ 	 	 	Log.d(TAG, result); 
+ 	 	 	/** 
+*	Show insert information 
+*	*/ 
+ 	 	 	if (result.equals(Static.SUCCESS)) { 
+ 	 	 	 	Toast.makeText(MainActivity.this, "Contact deleted", 
+Toast.LENGTH_LONG).show(); 
+ 	 	 	listContact.clear(); 
+ 	 	 	new GetContacts().execute(); 
+ 	 	} else if (result.equals(Static.FAIL)) { 
+Toast.makeText(MainActivity.this, "Fail to delete contact", 
+Toast.LENGTH_LONG).show(); 
+ 	 	 	} 
+ 	 	 	 
+ 	 	} 
+ 	 
+ 	} 
+ 
+ 	@Override 
+ 	public boolean onCreateOptionsMenu(Menu menu) { 
+ 	 	getMenuInflater().inflate(R.menu.main, menu); 
+ 	 	return true;  	} 
+ 
+} 
+
+}

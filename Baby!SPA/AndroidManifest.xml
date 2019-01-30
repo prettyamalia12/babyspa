@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.babyspa"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.example.babyspa.BabySPA"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity 
+		    android:name="com.example.babyspa.Adapterbaby"> 
+		</activity>
+		<activity 
+		    android:name="com.example.babyspa.addpost"> 
+		</activity>
+		<activity 
+		    android:name="com.example.babyspa.editpost"> 
+		</activity>
+			<activity 
+		    android:name="com.example.babyspa.homepage"> 
+		    </activity>
+		    	<activity 
+		    android:name="com.example.babyspa.HttpHandlerbaby"> 
+		    </activity>
+		    		<activity 
+		    android:name="com.example.babyspa.knowmore"> 
+		    </activity>		    
+		<activity 
+		    android:name="com.example.babyspa.login"> 
+		    </activity>
+		    		<activity 
+		    android:name="com.example.babyspa.postlist"> 
+		</activity>
+		<activity 
+		    android:name="com.example.babyspa.post"> 
+		</activity>
+		<activity 
+		    android:name="com.example.babyspa.staticbaby"> 
+		    </activity>
+
+
+		    <activity 
+		    android:name="com.example.babyspa.whatarethebenefits"> 
+		    </activity>
+		    <activity 
+		    android:name="com.example.babyspa.whatisbabyspa"> 
+		    </activity>
+			<activity 
+		    android:name="com.example.babyspa.babymassage"> 
+		    </activity>
+    </application>
+
+</manifest>

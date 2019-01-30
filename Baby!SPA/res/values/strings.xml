@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Baby!SPA</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="welcome">Welcome to Baby!SPA</string>
+	<string name="about">Baby!SPA is an application for parents who wants to learn about doing Baby SPA at Home</string>
+	<string name="go">Lets GO!</string>
+	<string name="baby">Baby SPA at Home</string>
+	<string name="what">What is Baby SPA?</string>
+	<string name="benefits">What are the benefits?</string>
+	<string name="knowmore">Know More</string>
+	<string name="abouts">Baby!SPA is an android application for parents who wants to do Baby SPA at home 
+						in this application, parents can see tutorial videos about baby SPA and how to do it.<br/>
+						Parents also can see article about baby spa and the effect to their baby.
+	</string>
+	<string name="comments">Add Comments</string>
+	<string name="baby_massage">BabyMassage</string>
+	<string name="baby_massage_is_a_longstanding_tradition_in_many_cultures_including_chinese_indian_african_and_swiss_baby_spa_combines_techniques_from_western_and_chinese_massage_techniques_to_give_your_baby_a_tailored_massage_experience_baby_spa_strongly_encourages_parents_to_learn_how_to_massage_their_own_babies_so_this_can_be_done_daily_at_home_">Baby massage is a longstanding tradition in many cultures, including Chinese, Indian, African and Swiss.  Baby Spa combines techniques from Western and Chinese massage techniques to give your baby a tailored massage experience.  Baby Spa strongly encourages parents to learn how to massage their own babies so this can be done daily at home.</string>
+	<string name="my_post">My Post</string>
+	<string name="know_more">Know More</string>
+	<string name="add_new_post">Add New Post</string>
+	<string name="login_register_to_baby_spa">Login / Register to Baby!SPA</string>
+	<string name="password">password</string>
+	<string name="username">username</string>
+	<string name="login">Login</string>
+	<string name="new_to_baby_spa_you_need_to_register_first">New to Baby!SPA? you need to register first</string>
+	<string name="register">Register</string>
+	<string name="login_admin"></string>
+</resources>

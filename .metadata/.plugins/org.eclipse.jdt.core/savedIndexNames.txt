@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+D:\OKTAVIA_PROJECT_UTSerror\.metadata\.plugins\org.eclipse.jdt.core
+1224506370.index
+2532735696.index
+1327793934.index
+1161682804.index

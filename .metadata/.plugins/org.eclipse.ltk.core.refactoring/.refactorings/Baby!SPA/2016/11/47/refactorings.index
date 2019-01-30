@@ -1,0 +1,29 @@
+1479084557205	Rename resource 'how1.xml'
+1479126710930	Delete element
+1479126752426	Rename resource 'how.xml'
+1479126764157	Rename resource 'knowmore'
+1479131621173	Rename field 'imageButton1'
+1479217866272	Rename resource 'comments.xml'
+1479217873713	Rename resource 'Addcomments.xml'
+1479217908050	Rename type 'comments'
+1479646899742	Rename field 'button1'
+1479646928946	Delete element
+1479646941843	Delete element
+1479647639009	Rename field 'editText1'
+1479648518385	Rename field 'password'
+1479648532290	Rename field 'editText3'
+1479649587775	Rename field 'register'
+1479649595372	Rename field 'name'
+1479649619133	Rename field 'registerr'
+1479650286565	Rename resource 'whatisbabyspa.xml'
+1479650316771	Rename type 'whatisbabyspa'
+1479650337099	Rename resource 'babyhydrotherapy'
+1479650584470	Delete element
+1479651242222	Move file
+1479651450506	Rename resource 'post.xml'
+1479651491062	Extracts string 'Baby Massage' into R.string.baby_massage
+1479651503794	Extracts string 'Baby massage is a longstanding tradition in many cultures, including Chinese, Indian, African and Swiss.  Baby Spa combines techniques from Western and Chinese massage techniques to give your baby a tailored massage experience.  Baby Spa strongly encourages parents to learn how to massage their own babies so this can be done daily at home.' into R.string.baby_massage_is_a_longstanding_tradition_in_many_cultures_including_chinese_indian_african_and_swiss_baby_spa_combines_techniques_from_western_and_chinese_massage_techniques_to_give_your_baby_a_tailored_massage_experience_baby_spa_strongly_encourages_parents_to_learn_how_to_massage_their_own_babies_so_this_can_be_done_daily_at_home_
+1479651570107	Extracts string 'My Post' into R.string.my_post
+1479651575134	Extracts string 'Know More' into R.string.know_more
+1479651583821	Extracts string 'Add New Post' into R.string.add_new_post
+1479651609063	Extracts string 'TODO' into R.string.todo

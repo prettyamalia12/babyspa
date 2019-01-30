@@ -1,0 +1,46 @@
+1479686883025	Extracts string 'Login / Register to Baby!SPA' into R.string.login_register_to_baby_spa
+1479686901350	Extracts string 'password' into R.string.password
+1479686966547	Extracts string 'username' into R.string.username
+1479686988665	Extracts string 'Login' into R.string.login
+1479686995136	Extracts string 'New to Baby!SPA? you need to register first' into R.string.new_to_baby_spa_you_need_to_register_first
+1479687000211	Extracts string 'Register' into R.string.register
+1479687375986	Delete element
+1479690022686	Delete element
+1479820057151	Rename field 'editText1'
+1479821746945	Delete element
+1479821759843	Delete element
+1479824227715	Rename field 'register'
+1479824528420	Rename field 'registerbtn'
+1479824557422	Rename field 'registerr'
+1479825536245	Rename field 'registerr'
+1479904739058	Extracts string 'null' into R.string.login_admin
+1479904852955	Delete element
+1479905698593	Delete element
+1479907661205	Delete element
+1479907676699	Delete element
+1479908003165	Delete element
+1479908085168	Rename type 'babyhydrotherapy'
+1479908105193	Delete element
+1479908121380	Rename resource 'babyhydrotherapy.xml'
+1479908552760	Delete element
+1479909997061	Rename type 'post'
+1479911732697	Rename field 'textView1'
+1479992096058	Rename field 'editText2'
+1479992889261	Delete element
+1480044507464	Rename field 'listView1'
+1480045600369	Rename compilation unit 'post.java'
+1480046931428	Rename type 'postEntity'
+1480047270221	Rename resource 'post.xml'
+1480048122310	Move compilation unit
+1480048128216	Move compilation unit
+1480048179656	Move compilation unit
+1480048184539	Delete element
+1480048312382	Delete element
+1480048314047	Delete element
+1480048371710	Move compilation unit
+1480048374245	Move compilation unit
+1480048377067	Move compilation unit
+1480048582231	Delete element
+1480048585875	Delete element
+1480081948272	Delete element
+1480145786598	Rename field 'textView1'
